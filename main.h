@@ -35,6 +35,7 @@ typedef struct print_handle
 
 /* print output according to format */
 int _printf(const char *format, ...);
-
+int (*get_func(const char id))(va_list);
+int _putchar(int chr);
 
 #endif
