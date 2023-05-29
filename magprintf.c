@@ -6,50 +6,33 @@
 * Return: Output according to a format
 */
 
-int _printf(const char *format, ...);
-int Mag;
-int printed = 0;
-int printed_chars = 0;
-int flags = 0;
-int width = 0;
-int precision = 0;
-int size = 0;
-int buff_ind = 0;
-va_list list;
-char buffer[BUFSIZ];
-void print_buffer(char buffer[], int *buff_ind)
+int _printf(const char *format, ...)
 {
-	if
-		(!format);
-	{
+	int printed_chars = 0;
+	int buff_ind = 0;
+	va_list list;
+	char buffer[BUFSIZ];
+
+	if (!format)
 		return (-1);
-	}
 	va_start(list, format);
-	for
-		(Mag = 0; format && format[Mag] != '\0';  Mag++)
+	for (int Mag = 0; format[Mag] != '\0'; Mag++)
 	{
 		if (format[Mag] != '%')
 		{
-			buffer[buff_ind] = format[Mag];
-			buff_ind++;
+			buffer[buff_ind++] = format[Mag];
+
 			if (buff_ind == BUFSIZ)
+			{
 				print_buffer(buffer, &buff_ind);
-			/* write(1, &format[Mag], 1);*/
+			}
 			printed_chars++;
 		}
 		else
 		{
 			print_buffer(buffer, &buff_ind);
-			format_flags =
-				get_flags(format_string, &format_index);
-			format_width =
-				get_width(format_string, &format_index, argument_list);
-			format_size =
-				getsid(format_string, &format_index);
-			characters_printed =
-				handle_print(format_string, &format_index, argument_list,
-						buffer, format_flags, format_width,
-						format_precision, format_size);
+			int characters_printed = handle_print(format, &Mag, &list, buffer);
+
 			if (characters_printed == -1)
 				return (-1);
 			printed_chars += characters_printed;
@@ -59,13 +42,14 @@ void print_buffer(char buffer[], int *buff_ind)
 	va_end(list);
 	return (printed_chars);
 }
+
 /**
 * print_buffer - Prints existing contents of buffer
 * @buffer: Array of characters
 * @buff_ind: length
 * Return: Contents of buffer
 */
-void print_buffer (char buffer[], int *buff_ind)
+void print_buffer(char buffer[], int *buff_ind)
 {
 	if (*buff_ind > 0)
 	{
