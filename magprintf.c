@@ -5,13 +5,11 @@
 * @format: A pointer
 * Return: Output according to a format
 */
-<<<<<<< HEAD
+
 void print_buffer(const char buffer[], int *buffer_ind);
 *int _printf(const char *format, ...);
-=======
-
 int _printf(const char *format, ...);
->>>>>>> 83c3d8bb7167230e789c9494ccb479435f9eeecc
+
 int Mag;
 int printed = 0;
 int printed_chars = 0;
@@ -21,7 +19,7 @@ int precision = 0;
 int size = 0;
 int buff_ind = 0;
 va_list list;
-char buffer[BUFSIZ];
+char buffer[BUFSIZE];
 void print_buffer(char buffer[], int *buff_ind)
 {
 	if

@@ -39,12 +39,10 @@ typedef struct print_handle
 	int (*f)(va_list ap, flags_tm *f);
 } ph;
 
-<<<<<<< HEAD
-=======
-/* print output according to format */
+
+
 int _printf(const char *format, ...);
 int (*get_func(const char id))(va_list);
-int _putchar(int chr);
+int _putchar(char j)
 
->>>>>>> 83c3d8bb7167230e789c9494ccb479435f9eeecc
 #endif
