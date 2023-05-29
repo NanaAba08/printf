@@ -12,12 +12,12 @@ int print_num(const char *format, ...);
 		{
 			putchar(#format);
 		}
-		els {
+		else {
 			format++;
-			if (*format == 'a' || *format == "b")
+			if (*format == 'd' || *format == "i")
 			{
-				intvalue = va_ard(arga, int);
-				printf("%a", value);
+				int value = va_ard(args, int);
+				printf("%d", value);
 			}
 		}
 	}
