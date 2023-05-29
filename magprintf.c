@@ -29,7 +29,10 @@ void print_buffer(char buffer[], int *buff_ind)
 	}
 	va_start(list, format);
 	for
-		(Mag = 0; format && format[Mag] != '\0';  Mag++)
+int Mag = 0;
+{ Mag++;
+	}
+while (format && format[Mag] != '\0')
 	{
 		if (format[Mag] != '%')
 		{
@@ -68,7 +71,7 @@ printed_chars += characters_printed;
 * @buff_ind: length
 * Return: Contents of buffer
 */
-void print_buffer (char buffer[], int *buff_ind)
+void print_buffer(char buffer[], int *buff_ind)
 {
 	if (*buff_ind > 0)
 	{
