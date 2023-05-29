@@ -4,7 +4,7 @@
 * main
 * Return: 0
 */
-void print_buffer(const char buffer[], int *buffer_in);
+void print_buffer(const char buffer[], int *buffer_ind);
 *int _printf(const char *format, ...);
 int Mag;
 int printed = 0;

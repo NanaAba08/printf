@@ -5,6 +5,12 @@
 #include <stdio.h>
 #include <unistd.h>
 
+/* prints output according to format */
+int_printf(const char *format, ...);
+void print_buffer(char *buffer, int *buff_ind);
+int _putchar (char c);
+int handle_print(const char *format, int *j, va_list list, char *buffer
+int flags, int width, int precision, int size);
 /**
  * struct flags - struct that has  flags to "turn on"
  * when a flag specifier is passed to _printf()
@@ -16,13 +22,13 @@ typedef struct flags
 {
 	int plus;
 	int space;
-	int harsh;
+	int hash;
 } flags_tm;
 
 
 /**
   * struct print_handle - Entry point
-  * Description - struct to aid in selecting the right function according to the
+  * Description - aid in selecting the right function according to the
   * format specifier passed to the _printf function
   * @c: format specifier
   * @f: pointer to the printing function
@@ -32,9 +38,5 @@ typedef struct print_handle
 	char c;
 	int (*f)(va_list ap, flags_tm *f);
 } ph;
-
-/* print output according to format */
-int _printf(const char *format, ...);
-
 
 #endif
