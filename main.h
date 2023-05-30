@@ -11,5 +11,7 @@
 int _printf(const char *format, ...);
 int _putchar(int chr);
 int print_string(const char *str);
+int printBinary(unsigned int num);
+int con_binary(va_list liz);
 
 #endif
