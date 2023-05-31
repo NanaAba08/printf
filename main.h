@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define UNUSED(x) (void)(x)
+#define BUFFER_SIZE 1024
+
 #define F_MINUS (1)
 #define F_PLUS (1 << 1)
 #define F_ZERO (2)
@@ -65,8 +68,8 @@ int print_hexadc(va_list typ, char buffer[],
 		int flg, int wi, int p, int size);
 int print_hexa_up(va_list typ, char buffer[],
 		int flg, int wi, int p, int size);
-int print_hexa(va_list typ, char map_to[]
-		char buffer[], int flg, int flg_ch, int wi, int p, int size);
+int print_hexa(va_list typ, char map_t[],
+		char buffer[], int flg, char flg_c, int wi, int p, int size);
 
 /* Function to print non printable characters */
 int print_non_printable(va_list typ, char buffer[],

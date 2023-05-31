@@ -1,66 +1,156 @@
 #include "main.h"
-void print_buffer(char buffer[], int *buff_ind);
 
 /**
- * _printf - function
- * @frt: format.
- * Return: displays char.
- */
-int _printf(const char *frt, ...)
+  * print_unsnd - Prints an unsigned number
+  * @typ: List arguments
+  * @buffer: Buffer array
+  * @flg: active flags
+  * @wi: get width
+  * @p: Specifies Precision
+  * @size:specifies Size
+  * Return: Number of chars
+  */
+int print_unsnd(va_list typ, char buffer[],
+	int flg, int wi, int p, int size)
 {
-	int i, printed = 0, printed_chars = 0;
-	int flags, width, precision, size, buff_ind = 0;
-	va_list list;
-	char buffer[BUFF_SIZE];
+	int d = BUFFER_SIZE - 2;
+	unsigned long int num = va_arg(typ, unsigned long int);
 
-	if (format == NULL)
-		return (-1);
+	num = conv_size_unsnd(num, size);
 
-	va_start(list, format);
+	if (num == 0)
+		buffer[d--] = '0';
 
-	for (i = 0; format && format[i] != '\0'; i++)
+	buffer[BUFFER_SIZE - 1] = '\0';
+
+	while (num > 0)
 	{
-		if (format[i] != '%')
-		{
-			buffer[buff_ind++] = format[i];
-			if (buff_ind == BUFF_SIZE)
-				print_buffer(buffer, &buff_ind);
-			/* write(1, &format[i], 1);*/
-			printed_chars++;
-		}
-		else
-		{
-			print_buffer(buffer, &buff_ind);
-			flags = get_flags(format, &i);
-			width = get_width(format, &i, list);
-			precision = get_precision(format, &i, list);
-			size = get_size(format, &i);
-			++i;
-			printed = handle_print(format, &i, list, buffer,
-				flags, width, precision, size);
-			if (printed == -1)
-				return (-1);
-			printed_chars += printed;
-		}
+		buffer[d--] = (num % 10) + '0';
+		num /= 10;
 	}
 
-	print_buffer(buffer, &buff_ind);
+	d++;
 
-	va_end(list);
-
-	return (printed_chars);
+	return (write_unsnd(0, d, buffer, flg, wi, p, size));
 }
 
 /**
- * print_buffer - Prints contents of existing buffer
- * @buffer: Array of characters
- * @buff_ind: point to add next char, represents length.
+ * print_oct - Prints an unsigned number in octal notation
+ * @typ: List arguments
+ * @buffer: Buffer array
+ * @flg: active flags
+ * @wi: get width
+ * @p: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
  */
-void print_buffer(char buffer[], int *buff_ind)
+int print_oct(va_list typ, char buffer[],
+	int flg, int wi, int p, int size)
 {
-	if (*buff_ind > 0)
-		write(1, &buffer[0], *buff_ind);
 
-	*buff_ind = 0;
+	int d = BUFFER_SIZE - 2;
+	unsigned long int num = va_arg(typ, unsigned long int);
+	unsigned long int init_num = num;
+
+	UNUSED(wi);
+
+	num = conv_size_unsnd(num, size);
+
+	if (num == 0)
+		buffer[d--] = '0';
+
+	buffer[BUFFER_SIZE - 1] = '\0';
+
+	while (num > 0)
+	{
+		buffer[d--] = (num % 8) + '0';
+		num /= 8;
+	}
+
+	if (flg & F_HASH && init_num != 0)
+		buffer[d--] = '0';
+
+	d++;
+
+	return (write_unsnd(0, d, buffer, flg, wi, p, size));
 }
 
+/**
+ * print_hexadc - Prints an unsigned number in hexadecimal notation
+ * @typ: List arguments
+ * @buffer: Buffer array
+ * @flg: active flags
+ * @wi: width
+ * @p: Specifies Precision
+ * @size: specifies Size
+ * Return: Number of chars printed
+ */
+int print_hexadc(va_list typ, char buffer[],
+	int flg, int wi, int p, int size)
+{
+	return (print_hexa(typ, "0123456789abcdef", buffer,
+		flg, 'X', wi, p, size));
+}
+
+/**
+ * print_hexa_up - Prints an unsigned number in upper hexadecimal notation
+ * @typ: List arguments
+ * @buffer: Buffer array
+ * @flg: active flags
+ * @wi: width
+ * @p: Specifies Precision
+ * @size: specifies Size
+ * Return: Number of chars printed
+ */
+int print_hexa_up(va_list typ, char buffer[],
+	int flg, int wi, int p, int size)
+{
+	return (print_hexa(typ, "0123456789ABCDEF", buffer,
+		flg, 'X', wi, p, size));
+}
+
+/**
+ * print_hexa - Prints a hexadecimal number in lower or upper
+ * @typ: List arguments
+ * @map_t: Array of values to map to
+ * @buffer: Buffer array
+ * @flg: active flags
+ * @flg_c: Calculates active flags
+ * @wi: width
+ * @p: specifies Precision
+ * @size: Specifies size
+ * @size: Size specification
+ * Return: Number of chars printed
+ */
+int print_hexa(va_list typ, char map_t[],
+		char buffer[], int flg, char flg_c, int wi, int p, int size)
+{
+	int a = BUFFER_SIZE - 2;
+	unsigned long int num = va_arg(typ, unsigned long int);
+	unsigned long int init_num = num;
+
+	UNUSED(wi);
+
+	num = conv_size_unsnd(num, size);
+
+	if (num == 0)
+		buffer[a--] = '0';
+
+	buffer[BUFFER_SIZE - 1] = '\0';
+
+	while (num > 0)
+	{
+		buffer[a--] = map_t[num % 16];
+		num /= 16;
+	}
+
+	if (flg & F_HASH && init_num != 0)
+	{
+		buffer[a--] = flg_c;
+		buffer[a--] = '0';
+	}
+
+	a++;
+
+	return (write_unsnd(0, a, buffer, flg, wi, p, size));
+}
