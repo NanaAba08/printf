@@ -59,7 +59,7 @@ return (wi);
 }
 else
 {
-	for (i = wi -len; i > 0; i--)
+	for (i = wi - len; i > 0; i--)
 		write(1, " ", 1);
 	write(1, &st[0], len);
 	return (wi);

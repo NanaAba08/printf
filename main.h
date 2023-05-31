@@ -106,7 +106,7 @@ int write_point(char buffer[], int ind, int len,
 int write_unsnd(int is_neg, int ind, char buffer[],
 		int flag, int wi, int p, int size);
 
-/****************** UTILS ******************/
+/****************** UTILITY FUNCTIONS ******************/
 
 int is_print(char);
 int append_hexa_code(char, char[], int);
