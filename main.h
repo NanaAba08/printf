@@ -17,28 +17,30 @@
 /**
  * struct frt - struct op
  * @frt: the format
- * @funct: the function
+ * @fnct: the function
  */
 
 struct frt
 {
 	char frt;
-	int (*funct)(va_list, char[], int, int, int, int);
+	int (*fnct)(va_list, char[], int, int, int, int);
 };
 
 /**
  * struct funct - struct op
- *@frt: the format
- *@funct: the function
+ * @f_rt: the format
+ * @funct: the function
  */
 
 typedef struct funct
 {
-	char frt;
+	char f_rt;
 	int (*funct)(va_list, char[], int, int, int, int);
 } funct;
-int _printf(const char *frt, int *i,
+int _printf(const char *format, ...);
+int handle_print(const char *frt, int *i,
 		va_list arg, char buffer[], int flg, int wi, int p, int size);
+
 
 /****************** FUNCTIONS ******************/
 
@@ -67,7 +69,7 @@ int print_hexa(va_list typ, char map_to[]
 		char buffer[], int flg, int flg_ch, int wi, int p, int size);
 
 /* Function to print non printable characters */
-int print_point(va_list typ, char buffer[],
+int print_non_printable(va_list typ, char buffer[],
 		int flg, int wi, int p, int size);
 
 /* Functions to print memory address */
